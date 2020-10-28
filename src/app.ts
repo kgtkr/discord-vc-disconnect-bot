@@ -18,13 +18,17 @@ async function allKick() {
 
 client.on("ready", async () => {});
 
-cron.schedule("0 0 4,5,6,7 * * *", async () => {
-  try {
-    await allKick();
-  } catch (e) {
-    console.error(e);
-  }
-});
+cron.schedule(
+  "0 0 4,5,6,7 * * *",
+  async () => {
+    try {
+      await allKick();
+    } catch (e) {
+      console.error(e);
+    }
+  },
+  { timezone: "Asia/Tokyo" }
+);
 
 client.login(
   JSON.parse(fs.readFileSync("config.json", { encoding: "utf8" })).token
