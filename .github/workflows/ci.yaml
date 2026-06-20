@@ -25,10 +25,16 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.PAT }}
       -
+        name: Generate tags
+        uses: kgtkr/docker-tags-gen-action@master
+        id: tags
+        with:
+          name: ghcr.io/${{ github.repository_owner }}/discord-vc-disconnect-bot
+      -
         name: Build and push
         uses: docker/build-push-action@v2
         with:
           context: .
           platforms: linux/amd64,linux/arm64
           push: true
-          tags: ghcr.io/${{ github.repository_owner }}/discord-vc-disconnect-bot:${{ github.sha }}
+          tags: ${{ steps.tags.outputs.tags }}
